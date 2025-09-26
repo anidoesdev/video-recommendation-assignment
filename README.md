@@ -6,15 +6,18 @@ A sophisticated recommendation system that suggests personalized video content b
 
 This project implements a video recommendation algorithm that:
 
-- Delivers personalized content recommendations
-- Handles cold start problems using mood-based recommendations
-- Utilizes Graph/Deep neural networks for content analysis
+- Delivers personalized content recommendations using **Deep Learning (BERT)**
+- Handles cold start problems using popular content fallback
+- Utilizes **Sentence Transformers** for semantic content understanding
 - Integrates with external APIs for data collection
 - Implements efficient data caching and pagination
+- Provides both personalized feeds and similar content discovery
 
 ## 🛠️ Technology Stack
 
 - **Backend Framework**: FastAPI
+- **Deep Learning**: PyTorch, Transformers, Sentence-Transformers
+- **ML Libraries**: scikit-learn, pandas, numpy
 - **Documentation**: Swagger/OpenAPI
 
 ## 📋 Prerequisites
@@ -29,7 +32,7 @@ This project implements a video recommendation algorithm that:
    git clone https://github.com/Tim-Alpha/video-recommendation-assignment.git
    ```
    ```bash
-   cd video-recommendation-engine
+   cd video-recommendation-assignment
    ```
 1. **Set Up Virtual Environment**
 
@@ -43,12 +46,13 @@ This project implements a video recommendation algorithm that:
    pip install -r requirements.txt
    ```
 3. **Configure Environment Variables**
-   Create a `.env` file in the root directory:
+   Create a `.env` file in the root directory (see `.env.example`):
 
    ```env
 
    FLIC_TOKEN=your_flic_token
    API_BASE_URL=https://api.socialverseapp.com
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres
    ```
 4. **Run Database Migrations**
 
@@ -61,9 +65,16 @@ This project implements a video recommendation algorithm that:
    uvicorn app.main:app --reload
    ```
 
+6. **Health Check**
+
+   ```
+   GET /health
+   ```
+   Returns readiness and posts cache size.
+
 ## 📊 API Endpoints
 
-### Recommendation Endpoints Has to Build
+### Recommendation Endpoints
 
 1. **Get Personalized Feed**
 
@@ -71,7 +82,8 @@ This project implements a video recommendation algorithm that:
    GET /feed?username={username}
    ```
 
-   Returns personalized video recommendations for a specific user.
+   Returns personalized video recommendations for a specific user using deep learning.
+
 2. **Get Category-based Feed**
 
    ```
@@ -79,6 +91,20 @@ This project implements a video recommendation algorithm that:
    ```
 
    Returns category-specific video recommendations for a user.
+
+3. **Get Similar Posts**
+
+   ```
+   GET /similar/{post_id}?top_k=10
+   ```
+
+   Returns posts similar to a given post using BERT embeddings.
+
+Pagination parameters:
+
+```
+GET /feed?username={username}&page=1&page_size=20
+```
 
 ### Data Collection Endpoints (Internal Use)
 
@@ -151,11 +177,11 @@ Header:
 
 ## ✅ Evaluation Checklist
 
-- [ ] All APIs are functional
-- [ ] Database migrations work correctly
-- [ ] README is complete and clear
-- [ ] Postman collection is included
-- [ ] Videos are submitted
-- [ ] Code is well-documented
-- [ ] Implementation handles edge cases
-- [ ] Proper error handling is implemented
+- ✅ All APIs are functional
+- ✅ Database migrations work correctly
+- ✅ README is complete and clear
+- ✅ Postman collection is included
+- ✅ Videos are submitted
+- ✅ Code is well-documented
+- ✅ Implementation handles edge cases
+- ✅ Proper error handling is implemented
