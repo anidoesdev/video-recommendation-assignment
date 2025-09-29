@@ -31,7 +31,7 @@ def _get_with_retries(url: str, headers: dict, timeout: float = 10.0, retries: i
     raise last_exc
 
 def fetch_user_interactions(interaction_type: str, username: str) -> list:
-    url = f"{API_BASE_URL}/posts/{interaction_type}?username={username}&page=1&page_size=1000"
+    url = f"{API_BASE_URL}/posts/{interaction_type}?username={username}&page=1&page_size=1000&resonance_algorithm=resonance_algorithm_cjsvervb7dbhss8bdrj89s44jfjdbsjd0xnjkbvuire8zcjwerui3njfbvsujc5if"
     headers = {"Flic-Token": FLIC_TOKEN}
     try:
         response = _get_with_retries(url, headers=headers)
